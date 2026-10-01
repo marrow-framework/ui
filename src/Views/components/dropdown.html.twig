@@ -1,0 +1,15 @@
+{% set alignClass = align|default('right') == 'left' ? 'left-0' : 'right-0' %}
+
+<div x-data="{ open: false }" @click.outside="open = false" class="relative inline-block">
+    <span @click="open = !open">{% block trigger %}{{ trigger|default('')|raw }}{% endblock %}</span>
+
+    <div
+        x-show="open"
+        x-cloak
+        x-transition
+        class="absolute {{ alignClass }} z-50 mt-2 w-48 overflow-hidden rounded-lg border border-slate-800 bg-slate-900 py-1 shadow-xl"
+        @click="open = false"
+    >
+        {% block body %}{{ slot|default('')|raw }}{% endblock %}
+    </div>
+</div>

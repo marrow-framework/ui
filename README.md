@@ -88,33 +88,33 @@ every template here; they're pre-built HTML, not auto-escaped. Compose them from
 
 ## Components
 
-| Component | Props | Notes |
-|---|---|---|
-| `button` | `variant` (primary/secondary/danger/ghost/outline), `size` (sm/md/lg), `type`, `href`, `disabled`, `loading`, `slot` | Renders `<a>` instead of `<button>` when `href` is set. |
-| `alert` | `type` (info/success/warning/danger), `title`, `dismissible`, `slot` | `dismissible` needs Alpine (`x-show`/`x-cloak`). |
-| `card` | `title`, `footer`, `slot` | Plain container, no JS. |
-| `badge` | `variant` (default/success/warning/danger/info), `slot` | Plain, no JS. |
-| `modal` | `title`, `trigger`, `slot`, `maxWidth` (sm/md/lg/xl) | Self-contained Alpine `open` state per instance — safe to use more than once per page. |
-| `dropdown` | `trigger`, `slot`, `align` (left/right) | Closes on outside click (`@click.outside`). |
-| `input` | `name`, `type`, `value`, `placeholder`, `disabled`, `error` | Plain styled `<input>`, no JS. |
-| `textarea` | `name`, `value`, `placeholder`, `rows`, `disabled`, `error` | Plain, no JS. |
-| `label` | `for`, `required`, `slot` | Plain, no JS. |
-| `checkbox` | `name`, `value`, `checked`, `disabled`, `label` | Native checkbox, browser-styled accent color. |
-| `radio` | `name`, `value`, `checked`, `disabled`, `label` | Native radio. |
-| `switch` | `name`, `value`, `checked`, `disabled`, `label` | Pure CSS (`peer`/`peer-checked`) toggle — **no Alpine needed**. |
-| `select` | `name`, `options` (dict), `value`, `placeholder`, `disabled`, `error`, `slot` | Styled **native** `<select>` — not a custom searchable listbox; `slot` is a raw escape hatch for `<optgroup>`/custom `<option>` markup. |
-| `separator` | `orientation` (horizontal/vertical) | Plain divider, no JS. |
-| `avatar` | `src`, `alt`, `initials`, `size` (sm/md/lg) | Falls back to `initials` when `src` is empty. |
-| `spinner` | `size` (sm/md/lg) | The same spinner `button[loading]` uses internally, usable standalone. |
-| `progress` | `value`, `max` | Plain, no JS. |
-| `skeleton` | `class` | Sizing is entirely via `class` (e.g. `h-4 w-32`). |
-| `tooltip` | `trigger`, `slot`, `side` (top/bottom/left/right) | Pure CSS (`group-hover`) — fixed side, no Floating-UI-style auto-flip near viewport edges. |
-| `tabs` | `tabs` (array of `{id, label, content}`) | `content` is pre-rendered HTML per tab, passed as a single structured array (no compound `<Tabs.Trigger>`/`<Tabs.Content>` API). |
-| `accordion` | `items` (array of `{title, content}`) | Single-open (classic accordion), not multi-open. |
-| `breadcrumb` | `items` (array of `{label, href?}`) | The last item (or any item without `href`) renders as plain text. |
-| `pagination` | `currentPage`, `lastPage`, `urlPattern` (must contain `{page}`), `siblings` | Windowed with ellipses; builds URLs from a pattern string, not a Router — no Router dependency in a presentational class. |
-| `table` | `headers` (strings), `rows` (array of string arrays) | Cell values **are auto-escaped** (the one component here with no `raw` filter) — plain tabular data is the common case. |
-| `toaster` | *(none — render it once)* | Sonner-style toast stack. See [Toasts](#toasts-sonner-style) below. |
+| Component    | Props                                                                                                                | Notes                                                                                                                                   |
+| ------------ | -------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `button`     | `variant` (primary/secondary/danger/ghost/outline), `size` (sm/md/lg), `type`, `href`, `disabled`, `loading`, `slot` | Renders `<a>` instead of `<button>` when `href` is set.                                                                                 |
+| `alert`      | `type` (info/success/warning/danger), `title`, `dismissible`, `slot`                                                 | `dismissible` needs Alpine (`x-show`/`x-cloak`).                                                                                        |
+| `card`       | `title`, `footer`, `slot`                                                                                            | Plain container, no JS.                                                                                                                 |
+| `badge`      | `variant` (default/success/warning/danger/info), `slot`                                                              | Plain, no JS.                                                                                                                           |
+| `modal`      | `title`, `trigger`, `slot`, `maxWidth` (sm/md/lg/xl)                                                                 | Self-contained Alpine `open` state per instance — safe to use more than once per page.                                                  |
+| `dropdown`   | `trigger`, `slot`, `align` (left/right)                                                                              | Closes on outside click (`@click.outside`).                                                                                             |
+| `input`      | `name`, `type`, `value`, `placeholder`, `disabled`, `error`                                                          | Plain styled `<input>`, no JS.                                                                                                          |
+| `textarea`   | `name`, `value`, `placeholder`, `rows`, `disabled`, `error`                                                          | Plain, no JS.                                                                                                                           |
+| `label`      | `for`, `required`, `slot`                                                                                            | Plain, no JS.                                                                                                                           |
+| `checkbox`   | `name`, `value`, `checked`, `disabled`, `label`                                                                      | Native checkbox, browser-styled accent color.                                                                                           |
+| `radio`      | `name`, `value`, `checked`, `disabled`, `label`                                                                      | Native radio.                                                                                                                           |
+| `switch`     | `name`, `value`, `checked`, `disabled`, `label`                                                                      | Pure CSS (`peer`/`peer-checked`) toggle — **no Alpine needed**.                                                                         |
+| `select`     | `name`, `options` (dict), `value`, `placeholder`, `disabled`, `error`, `slot`                                        | Styled **native** `<select>` — not a custom searchable listbox; `slot` is a raw escape hatch for `<optgroup>`/custom `<option>` markup. |
+| `separator`  | `orientation` (horizontal/vertical)                                                                                  | Plain divider, no JS.                                                                                                                   |
+| `avatar`     | `src`, `alt`, `initials`, `size` (sm/md/lg)                                                                          | Falls back to `initials` when `src` is empty.                                                                                           |
+| `spinner`    | `size` (sm/md/lg)                                                                                                    | The same spinner `button[loading]` uses internally, usable standalone.                                                                  |
+| `progress`   | `value`, `max`                                                                                                       | Plain, no JS.                                                                                                                           |
+| `skeleton`   | `class`                                                                                                              | Sizing is entirely via `class` (e.g. `h-4 w-32`).                                                                                       |
+| `tooltip`    | `trigger`, `slot`, `side` (top/bottom/left/right)                                                                    | Pure CSS (`group-hover`) — fixed side, no Floating-UI-style auto-flip near viewport edges.                                              |
+| `tabs`       | `tabs` (array of `{id, label, content}`)                                                                             | `content` is pre-rendered HTML per tab, passed as a single structured array (no compound `<Tabs.Trigger>`/`<Tabs.Content>` API).        |
+| `accordion`  | `items` (array of `{title, content}`)                                                                                | Single-open (classic accordion), not multi-open.                                                                                        |
+| `breadcrumb` | `items` (array of `{label, href?}`)                                                                                  | The last item (or any item without `href`) renders as plain text.                                                                       |
+| `pagination` | `currentPage`, `lastPage`, `urlPattern` (must contain `{page}`), `siblings`                                          | Windowed with ellipses; builds URLs from a pattern string, not a Router — no Router dependency in a presentational class.               |
+| `table`      | `headers` (strings), `rows` (array of string arrays)                                                                 | Cell values **are auto-escaped** (the one component here with no `raw` filter) — plain tabular data is the common case.                 |
+| `toaster`    | _(none — render it once)_                                                                                            | Sonner-style toast stack. See [Toasts](#toasts-sonner-style) below.                                                                     |
 
 **Deliberately not included** (would need real JS state/positioning beyond what Alpine's core directives give you for free — Command palette/searchable Combobox, a DataTable with client-side sort/filter, a date-picker Calendar, Carousel): each is a meaningfully bigger undertaking than the components above and would pull in either a positioning library (Floating UI) or a dedicated Alpine plugin.
 
@@ -129,20 +129,26 @@ Render the toaster once, anywhere in your layout (typically right before `</body
 From then on, three things can produce a toast, with **no further setup**:
 
 1. **Your own JS**, any time:
+
    ```js
-   window.toast.success('Saved!')
-   window.toast.error('Something went wrong.')
-   window.toast.info('Heads up.', 6000)   // optional duration in ms, default 4000
+   window.toast.success('Saved!');
+   window.toast.error('Something went wrong.');
+   window.toast.info('Heads up.', 6000); // optional duration in ms, default 4000
    ```
+
 2. **Session flash messages** — the exact convention this package's views and `marrow/warden`'s controllers
    already use:
+
    ```php
    return $this->redirectToRoute('home')->with('status', 'Profile updated.');     // → success toast
    return $this->back()->withErrors(['email' => ['Invalid link.']]);              // → shown inline by error()/has_error(), not toasted
    ```
+
    Only the `status` and `error` flash keys are bridged to a toast (`success`/`error` respectively) — everything else (validation errors) stays as the inline `errors()`/`has_error()` rendering this package's form components already support.
+
 3. **`Marrow\Notifications\NotificationManager`'s `database` channel**, for the current authenticated
    user — the link to the framework's own notification system:
+
    ```php
    class InvoicePaid extends Notification
    {
@@ -156,6 +162,8 @@ From then on, three things can produce a toast, with **no further setup**:
 
    $notifications->send($user, new InvoicePaid($invoice));
    ```
+
+   ```txt
    The `toaster` component queries the user's unread rows on every page load (`Notifications\ToastNotificationSource`) and marks only the ones it actually toasted as read. **Opt in with a `message` key** — a notification whose `toDatabase()` payload has no `message` (e.g. pure `{invoice_id: 4}`) is left alone entirely (not toasted, not marked read), since this bridge has no way to guess how your app wants a purely structured payload worded; build a proper notification-center UI for those on the same table if you need one.
 
    Not filtered by `notifiable_type` by default: `AuthManager::user()` returns a plain `stdClass` (both
@@ -163,6 +171,7 @@ From then on, three things can produce a toast, with **no further setup**:
    comparing class names would reliably filter out every row. If more than one notifiable type shares the
    same id space in your app, register your own `ToastNotificationSource` instance with an explicit
    `$notifiableType` instead of relying on the default.
+   ```
 
 ## Overriding a component
 
@@ -180,4 +189,3 @@ $registry->registerAs('button', \Modules\Ui\MyButtonComponent::class);
 - `marrow/framework` ^2.2
 - Alpine.js (only `alert[dismissible]`, `modal`, and `dropdown` need it at runtime — `button`, `card`, and
   `badge` render fine without it).
-# ui

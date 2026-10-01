@@ -1,0 +1,3 @@
+<label {% if for %}for="{{ for }}"{% endif %} class="mb-1 block text-sm font-medium text-slate-300 {{ class }}">
+    {{ slot|raw }}{% if required %} <span class="text-red-400">*</span>{% endif %}
+</label>

@@ -1,0 +1,22 @@
+<div class="overflow-x-auto rounded-xl border border-slate-800">
+    <table class="w-full text-left text-sm {{ class }}">
+        {% if headers %}
+        <thead class="border-b border-slate-800 bg-slate-900/60">
+            <tr>
+                {% for header in headers %}
+                <th class="px-4 py-3 font-medium text-slate-400">{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        {% endif %}
+        <tbody class="divide-y divide-slate-800">
+            {% for row in rows %}
+            <tr class="hover:bg-slate-900/40">
+                {% for cell in row %}
+                <td class="px-4 py-3 text-slate-300">{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
