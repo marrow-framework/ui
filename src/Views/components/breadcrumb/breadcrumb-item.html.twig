@@ -1,0 +1,7 @@
+<li class="flex items-center {{ class }}">
+    {% if href %}
+        <a href="{{ href }}" class="hover:text-orange-300">{{ slot|raw }}</a>
+    {% else %}
+        <span class="text-slate-200" aria-current="page">{{ slot|raw }}</span>
+    {% endif %}
+</li>

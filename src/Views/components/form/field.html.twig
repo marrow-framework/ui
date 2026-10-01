@@ -1,0 +1,33 @@
+{% set fieldErrors = errorMessages is not empty ? errorMessages : errors(name) %}
+{% set hasError = fieldErrors is not empty %}
+
+<div class="mb-5">
+    {% if label %}
+        {{ component('label', {for: id, required: required, slot: label}) }}
+    {% endif %}
+
+    {% if multiline %}
+        {{ component('textarea', {
+            name: name, id: id, value: old(name, value), placeholder: placeholder, rows: rows,
+            disabled: disabled, autofocus: autofocus, error: hasError, class: class, attrs: attrs,
+        }) }}
+    {% elseif options %}
+        {{ component('select', {
+            name: name, id: id, options: options, value: old(name, value), placeholder: placeholder,
+            disabled: disabled, error: hasError, class: class, attrs: attrs,
+        }) }}
+    {% else %}
+        {{ component('input', {
+            name: name, id: id, type: type,
+            value: type == 'password' ? '' : old(name, value),
+            placeholder: placeholder, disabled: disabled, autofocus: autofocus,
+            error: hasError, class: class, attrs: attrs,
+        }) }}
+    {% endif %}
+
+    {% if hasError %}
+        <p class="mt-1 text-sm text-red-400">{{ fieldErrors[0] }}</p>
+    {% elseif help %}
+        <p class="mt-1 text-sm text-slate-500">{{ help }}</p>
+    {% endif %}
+</div>

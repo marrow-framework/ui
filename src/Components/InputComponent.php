@@ -6,15 +6,29 @@ namespace Marrow\Ui\Components;
 
 use Marrow\Template\Component;
 
-/** {{ component('input', {name: 'email', type: 'email', placeholder: 'you@example.com', value: old('email')}) }} */
+/**
+ * {{ component('input', {name: 'email', type: 'email', placeholder: 'you@example.com', value: old('email')}) }}
+ *
+ * `attrs` is a passthrough for any HTML attribute this component has no
+ * dedicated prop for (`autocomplete`, `inputmode`, `maxlength`, `pattern`,
+ * ...) — a fixed prop list can't anticipate every attribute a real form
+ * eventually needs:
+ *
+ *   {{ component('input', {name: 'code', attrs: {inputmode: 'numeric', autocomplete: 'one-time-code'}}) }}
+ *
+ * A `true` value renders a bare boolean attribute (`required: true` →
+ * `required`); `false`/`null` omits the attribute entirely.
+ */
 class InputComponent extends Component
 {
     public string $type = 'text';
     public string $value = '';
     public string $placeholder = '';
     public bool $disabled = false;
+    public bool $autofocus = false;
     public bool $error = false;
     public string $class = '';
+    public array $attrs = [];
 
     /**
      * Not a plain public property: `Component::$name` is already declared,

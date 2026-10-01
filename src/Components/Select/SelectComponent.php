@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Marrow\Ui\Components;
+namespace Marrow\Ui\Components\Select;
 
 use Marrow\Template\Component;
 
@@ -43,7 +43,7 @@ class SelectComponent extends Component
 
     public function render(): string
     {
-        return '@ui/components/select';
+        return '@ui/components/select/select';
     }
 
     public function data(): array
