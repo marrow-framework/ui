@@ -343,3 +343,7 @@ $registry->registerAs('button', \Modules\Ui\MyButtonComponent::class);
 - `marrow/framework` ^2.2
 - Alpine.js — only `alert[dismissible]`, `modal`, `dropdown`, `tabs`, and `accordion` need it at runtime;
   `button`, `card`, `badge`, `switch`, `tooltip`, and the rest render fine without it.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
