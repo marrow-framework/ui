@@ -6,15 +6,22 @@ namespace Marrow\Ui\Components;
 
 use Marrow\Template\Component;
 
-/** {{ component('textarea', {name: 'bio', rows: 4, value: old('bio')}) }} */
+/**
+ * {{ component('textarea', {name: 'bio', rows: 4, value: old('bio')}) }}
+ *
+ * `attrs` — see InputComponent's docblock; same arbitrary-HTML-attribute
+ * passthrough.
+ */
 class TextareaComponent extends Component
 {
     public string $value = '';
     public string $placeholder = '';
     public int $rows = 3;
     public bool $disabled = false;
+    public bool $autofocus = false;
     public bool $error = false;
     public string $class = '';
+    public array $attrs = [];
 
     /** See InputComponent's docblock — can't be a plain public `$name`/`$id`. */
     private string $fieldName = '';

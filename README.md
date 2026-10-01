@@ -141,21 +141,26 @@ exception — see the components table below.
 
 ## Components
 
+Standalone components keep one PHP class per component, flat under `Components/` (e.g.
+`Components/ButtonComponent.php`). A component with sub-pieces (Card, Breadcrumb, Select, Form) groups its
+whole family under `Components/{Family}/` instead, mirrored by `Views/components/{family}/` for the matching
+templates — e.g. `Components/Card/CardHeaderComponent.php` renders `Views/components/card/card-header.html.twig`.
+This only affects where the PHP/Twig *files* live; the registered component *name* you actually call
+(`card-header`) is the same either way.
+
 | Component    | Props                                                                                                                 | Notes                                                                                                                                    |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------| ------------------------------------------------------------------------------------------------------------------------------------------|
 | `button`     | `variant` (primary/secondary/danger/ghost/outline), `size` (sm/md/lg), `type`, `href`, `disabled`, `loading`, `slot`  | Renders `<a>` instead of `<button>` when `href` is set.                                                                                  |
 | `alert`      | `type` (info/success/warning/danger), `title`, `dismissible`, `slot`                                                 | `dismissible` needs Alpine (`x-show`/`x-cloak`).                                                                                         |
-| `card`       | `title`, `footer`, `slot`                                                                                             | Plain container, no JS.                                                                                                                  |
 | `badge`      | `variant` (default/success/warning/danger/info), `slot`                                                              | Plain, no JS.                                                                                                                             |
 | `modal`      | `title`, `trigger`, `slot`, `maxWidth` (sm/md/lg/xl)                                                                  | Self-contained Alpine `open` state per instance — safe to use more than once per page.                                                   |
 | `dropdown`   | `trigger`, `slot`, `align` (left/right)                                                                               | Closes on outside click (`@click.outside`).                                                                                              |
-| `input`      | `name`, `type`, `value`, `placeholder`, `disabled`, `error`                                                           | Plain styled `<input>`, no JS.                                                                                                            |
-| `textarea`   | `name`, `value`, `placeholder`, `rows`, `disabled`, `error`                                                           | Plain, no JS.                                                                                                                             |
+| `input`      | `name`, `type`, `value`, `placeholder`, `disabled`, `autofocus`, `error`, `attrs`                                     | Plain styled `<input>`, no JS. `attrs` — arbitrary HTML attribute passthrough (`autocomplete`, `inputmode`, ...), see its own docblock.   |
+| `textarea`   | `name`, `value`, `placeholder`, `rows`, `disabled`, `autofocus`, `error`, `attrs`                                     | Plain, no JS.                                                                                                                             |
 | `label`      | `for`, `required`, `slot`                                                                                             | Plain, no JS.                                                                                                                             |
 | `checkbox`   | `name`, `value`, `checked`, `disabled`, `label`                                                                       | Native checkbox, browser-styled accent color.                                                                                            |
 | `radio`      | `name`, `value`, `checked`, `disabled`, `label`                                                                       | Native radio.                                                                                                                             |
 | `switch`     | `name`, `value`, `checked`, `disabled`, `label`                                                                       | Pure CSS (`peer`/`peer-checked`) toggle — **no Alpine needed**.                                                                           |
-| `select`     | `name`, `options` (dict), `value`, `placeholder`, `disabled`, `error`, `slot`                                         | Styled **native** `<select>` — not a custom searchable listbox; `slot` is a raw escape hatch for `<optgroup>`/custom `<option>` markup.  |
 | `separator`  | `orientation` (horizontal/vertical)                                                                                   | Plain divider, no JS.                                                                                                                     |
 | `avatar`     | `src`, `alt`, `initials`, `size` (sm/md/lg)                                                                           | Falls back to `initials` when `src` is empty.                                                                                             |
 | `spinner`    | `size` (sm/md/lg)                                                                                                     | The same spinner `button[loading]` uses internally, usable standalone.                                                                   |
@@ -164,15 +169,103 @@ exception — see the components table below.
 | `tooltip`    | `trigger`, `slot`, `side` (top/bottom/left/right)                                                                     | Pure CSS (`group-hover`) — fixed side, no Floating-UI-style auto-flip near viewport edges.                                                |
 | `tabs`       | `tabs` (array of `{id, label, content}`)                                                                              | `content` is pre-rendered HTML per tab, passed as one structured array (no compound `<Tabs.Trigger>`/`<Tabs.Content>` API).              |
 | `accordion`  | `items` (array of `{title, content}`)                                                                                 | Single-open (classic accordion), not multi-open.                                                                                          |
-| `breadcrumb` | `items` (array of `{label, href?}`)                                                                                   | The last item (or any item without `href`) renders as plain text.                                                                        |
 | `pagination` | `currentPage`, `lastPage`, `urlPattern` (must contain `{page}`), `siblings`                                           | Windowed with ellipses; builds URLs from a pattern string, not a Router — no Router dependency in a presentational class.                |
 | `table`      | `headers` (strings), `rows` (array of string arrays)                                                                  | Cell values **are auto-escaped** (the one component here with no `raw` filter) — plain tabular data is the common case.                  |
 | `toaster`    | _(none — render it once)_                                                                                             | Sonner-style toast stack. See [Toasts](#toasts-sonner-style) below.                                                                       |
+
+### Card family (`Components/Card/`)
+
+| Component          | Props            | Notes                                                                 |
+| ------------------ | ---------------- | ---------------------------------------------------------------------|
+| `card`              | `title`, `footer`, `slot`, `composed` | Plain shortcut (`title`/`footer` strings) by default; pass `composed: true` to assemble the pieces below instead — see CardComponent's docblock. |
+| `card-header`       | `class`, `slot`  | Compositional sub-piece.                                              |
+| `card-title`        | `class`, `slot`  | Compositional sub-piece.                                              |
+| `card-description`  | `class`, `slot`  | Compositional sub-piece.                                              |
+| `card-content`      | `class`, `slot`  | Compositional sub-piece.                                              |
+| `card-footer`       | `class`, `slot`  | Compositional sub-piece.                                              |
+
+```twig
+{% component 'card' with {composed: true} %}
+    {% component 'card-header' %}
+        {% component 'card-title' %}Account{% endcomponent %}
+        {% component 'card-description' %}Manage your account settings.{% endcomponent %}
+    {% endcomponent %}
+    {% component 'card-content' %}...{% endcomponent %}
+{% endcomponent %}
+```
+
+### Breadcrumb family (`Components/Breadcrumb/`)
+
+| Component          | Props                   | Notes                                                              |
+| ------------------- | ----------------------- | ------------------------------------------------------------------|
+| `breadcrumb`         | `items` (array of `{label, href?}`), `slot` | `items` is the plain shortcut; omit it and nest `breadcrumb-item` instead for the compositional form. |
+| `breadcrumb-item`    | `href`, `class`, `slot` | Renders a link when `href` is given, plain current-page text otherwise. |
+
+```twig
+{% component 'breadcrumb' %}
+    {% component 'breadcrumb-item' with {href: '/'} %}Dashboard{% endcomponent %}
+    {% component 'breadcrumb-item' %}Settings{% endcomponent %}
+{% endcomponent %}
+```
+
+Separators between compositional items are pure CSS (a `:not(:first-child)` sibling selector on the `<ol>`) —
+there's no shared loop context between independently-rendered items to ask "am I first?".
+
+### Select family (`Components/Select/`)
+
+| Component       | Props                                                          | Notes                                                                                   |
+| ---------------- | --------------------------------------------------------------| -----------------------------------------------------------------------------------------|
+| `select`          | `name`, `options` (dict), `value`, `placeholder`, `disabled`, `error`, `attrs`, `slot` | Styled **native** `<select>`, not a custom searchable listbox. `options` is the plain shortcut; `slot` also accepts raw `<option>`/`<optgroup>` markup, including nested `select-item` calls. |
+| `select-item`     | `value`, `selected`, `disabled`, `slot`                        | One `<option>`. `selected` isn't auto-computed from `select`'s `value` (items render independently) — pass it explicitly, e.g. `selected: role == 'admin'`. |
+
+```twig
+{% component 'select' with {name: 'role'} %}
+    {% component 'select-item' with {value: 'admin', selected: role == 'admin'} %}Administrator{% endcomponent %}
+    {% component 'select-item' with {value: 'editor', selected: role == 'editor'} %}Editor{% endcomponent %}
+{% endcomponent %}
+```
 
 **Deliberately not included** (would need real JS state/positioning beyond what Alpine's core directives give
 you for free): a searchable Combobox/Command palette, a DataTable with client-side sort/filter, a date-picker
 Calendar, a Carousel. Each is a meaningfully bigger undertaking than the components above and would pull in
 either a positioning library (Floating UI) or a dedicated Alpine plugin.
+
+## Forms (`Components/Form/`)
+
+| Component   | Props                                                                                                              | Notes |
+| ------------ | --------------------------------------------------------------------------------------------------------------- | ------|
+| `field`       | `name`, `type`, `label`, `required`, `value`, `placeholder`, `help`, `multiline`, `rows`, `options`, `disabled`, `autofocus`, `errorMessages`, `attrs`, `class` | Composite `label` + `input`/`textarea`/`select` + inline error + help text. Wires `old()`/`has_error()`/`errors()` automatically; never prefills a `password`-type field. |
+| `form`        | `form` (a `marrow/form-builder` `Form` instance, optional), `action`, `method`, `class`, `slot`                  | A styled `<form>` with CSRF + method-spoofing built in; see below for the form-builder bridge. `form: null` still gives you a plain styled form around whatever you put in `slot`. |
+
+```twig
+{{ component('field', {name: 'email', type: 'email', label: 'Email', required: true}) }}
+{{ component('field', {name: 'role', label: 'Role', options: {admin: 'Administrator', editor: 'Editor'}}) }}
+```
+
+### The `marrow/form-builder` bridge
+
+Hand `form` a real `marrow/form-builder` `Form` instance and every declared field renders automatically —
+no manual loop over `$form->fields()`:
+
+```php
+$form = RegisterForm::fromRequest($request); // marrow/form-builder
+```
+
+```twig
+{% set submit %}{{ component('button', {type: 'submit', slot: 'Create account'}) }}{% endset %}
+{{ component('form', {form: form, action: '/register', slot: submit}) }}
+```
+
+Each form-builder `Field` subclass maps to the matching `ui` component: `CharField`/`EmailField`/
+`IntegerField` → `field` (text/email/number), `TextareaField` → `field` with `multiline: true`,
+`ChoiceField` → `field` with `options`, `PasswordField` → `field` type=password (**never** prefilled, same
+rule form-builder's own `PasswordField::render()` already follows), `BooleanField` → `checkbox`,
+`HiddenField` → a bare hidden `input`, no label/wrapper. Validation errors come from the `Field` object's own
+`$errors` (populated by `$form->isValid()`), via `field`'s `errorMessages` override — not from the framework's
+session-flash `has_error()`/`errors()`, which form-builder doesn't use.
+
+This package has **no hard dependency** on `marrow/form-builder` (only a composer `suggest`) — `form` without
+a `form` prop, and every other component here, works with or without it installed.
 
 ## Toasts (Sonner-style)
 

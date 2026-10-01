@@ -1,6 +1,6 @@
 {
     "name": "marrow/ui",
-    "description": "A ready-to-use Tailwind + Alpine.js component library for Marrow — Button, Alert, Card, Badge, Modal, Dropdown — built on the framework's existing Component/ComponentRegistry primitives.",
+    "description": "A ready-to-use Tailwind + Alpine.js component library for Marrow — 30+ components (Button, Card, Select, Breadcrumb, a Form bridge to marrow/form-builder, and more) built on the framework's existing Component/ComponentRegistry primitives.",
     "type": "library",
     "license": "MIT",
     "keywords": ["marrow", "framework", "ui", "components", "tailwind", "alpinejs", "twig"],
@@ -18,6 +18,9 @@
     "require": {
         "php": ">=8.2",
         "marrow/framework": "^2.2"
+    },
+    "suggest": {
+        "marrow/form-builder": "Enables the `form` component's automatic field rendering for a marrow/form-builder Form instance"
     },
     "autoload": {
         "psr-4": {

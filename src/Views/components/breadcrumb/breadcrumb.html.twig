@@ -1,4 +1,5 @@
 <nav aria-label="Breadcrumb" class="{{ class }}">
+    {% if items %}
     <ol class="flex flex-wrap items-center gap-2 text-sm text-slate-400">
         {% for item in items %}
         <li class="flex items-center gap-2">
@@ -11,4 +12,12 @@
         </li>
         {% endfor %}
     </ol>
+    {% else %}
+    {# Compositional mode (breadcrumb-item children): each <li> draws its own
+       separator via a sibling CSS selector — there is no shared loop context
+       to ask "am I first?" when items are independently rendered components. #}
+    <ol class="flex flex-wrap items-center gap-2 text-sm text-slate-400 [&>li:not(:first-child)]:before:mr-2 [&>li:not(:first-child)]:before:text-slate-700 [&>li:not(:first-child)]:before:content-['/']">
+        {{ slot|raw }}
+    </ol>
+    {% endif %}
 </nav>

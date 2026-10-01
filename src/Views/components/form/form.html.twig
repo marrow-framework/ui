@@ -1,0 +1,23 @@
+{% set httpMethod = method|upper in ['GET', 'POST'] ? method|upper : 'POST' %}
+
+<form action="{{ action }}" method="{{ httpMethod }}" class="{{ class }}">
+    {{ csrf_field()|raw }}
+    {% if method|upper not in ['GET', 'POST'] %}{{ method_field(method)|raw }}{% endif %}
+
+    {% for f in fields %}
+        {% if f.kind == 'hidden' %}
+            {{ component('input', {type: 'hidden', name: f.name, value: f.value}) }}
+        {% elseif f.kind == 'checkbox' %}
+            {{ component('checkbox', {name: f.name, label: f.label, checked: f.checked}) }}
+            {% if f.errorMessages %}
+                <p class="mb-5 mt-1 text-sm text-red-400">{{ f.errorMessages[0] }}</p>
+            {% elseif f.help %}
+                <p class="mb-5 mt-1 text-sm text-slate-500">{{ f.help }}</p>
+            {% endif %}
+        {% else %}
+            {{ component('field', f) }}
+        {% endif %}
+    {% endfor %}
+
+    {{ slot|raw }}
+</form>
