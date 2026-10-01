@@ -1,0 +1,12 @@
+<label for="{{ id }}" class="inline-flex items-center gap-2 {{ disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer' }} {{ class }}">
+    <input
+        type="radio"
+        name="{{ name }}"
+        id="{{ id }}"
+        value="{{ value }}"
+        {% if checked %}checked{% endif %}
+        {% if disabled %}disabled{% endif %}
+        class="h-4 w-4 border-slate-700 bg-slate-900 text-orange-500 focus:ring-orange-400 focus:ring-offset-slate-950"
+    >
+    {% if label %}<span class="text-sm text-slate-300">{{ label }}</span>{% endif %}
+</label>

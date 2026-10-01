@@ -1,0 +1,116 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Marrow\Ui;
+
+use Marrow\Module\Attributes\Module;
+use Marrow\Module\BaseModule;
+use Marrow\Template\ComponentRegistry;
+use Marrow\Ui\Commands\UiInstallCommand;
+use Marrow\Ui\Components\AccordionComponent;
+use Marrow\Ui\Components\AlertComponent;
+use Marrow\Ui\Components\AvatarComponent;
+use Marrow\Ui\Components\BadgeComponent;
+use Marrow\Ui\Components\BreadcrumbComponent;
+use Marrow\Ui\Components\ButtonComponent;
+use Marrow\Ui\Components\CardComponent;
+use Marrow\Ui\Components\CheckboxComponent;
+use Marrow\Ui\Components\DropdownComponent;
+use Marrow\Ui\Components\InputComponent;
+use Marrow\Ui\Components\LabelComponent;
+use Marrow\Ui\Components\ModalComponent;
+use Marrow\Ui\Components\PaginationComponent;
+use Marrow\Ui\Components\ProgressComponent;
+use Marrow\Ui\Components\RadioComponent;
+use Marrow\Ui\Components\SelectComponent;
+use Marrow\Ui\Components\SeparatorComponent;
+use Marrow\Ui\Components\SkeletonComponent;
+use Marrow\Ui\Components\SpinnerComponent;
+use Marrow\Ui\Components\SwitchComponent;
+use Marrow\Ui\Components\TableComponent;
+use Marrow\Ui\Components\TabsComponent;
+use Marrow\Ui\Components\TextareaComponent;
+use Marrow\Ui\Components\ToasterComponent;
+use Marrow\Ui\Components\TooltipComponent;
+use Marrow\Ui\Notifications\ToastNotificationSource;
+use Marrow\Ui\Twig\ComponentTokenParser;
+use Twig\TwigFunction;
+
+/**
+ * Registers this package's components into the framework's own
+ * ComponentRegistry (a singleton — see Application::bindCoreServices()),
+ * and the `@ui` Twig namespace their templates live under.
+ *
+ * Unlike marrow/warden, nothing here is published/copied into the app:
+ * `composer require marrow/ui` is the whole install, same as
+ * marrow/form-builder. Use a component straight away:
+ *
+ *   {{ component('button', {variant: 'primary', slot: 'Save'}) }}
+ *
+ * Overriding a component's markup doesn't require forking the package —
+ * register your own class under the same name instead:
+ *
+ *   $registry->registerAs('button', \Modules\Ui\MyButtonComponent::class);
+ */
+#[Module(name: 'ui', commands: [UiInstallCommand::class])]
+class UiModule extends BaseModule
+{
+    private const COMPONENTS = [
+        ButtonComponent::class,
+        AlertComponent::class,
+        CardComponent::class,
+        BadgeComponent::class,
+        ModalComponent::class,
+        DropdownComponent::class,
+        InputComponent::class,
+        TextareaComponent::class,
+        LabelComponent::class,
+        CheckboxComponent::class,
+        RadioComponent::class,
+        SwitchComponent::class,
+        SelectComponent::class,
+        SeparatorComponent::class,
+        AvatarComponent::class,
+        SpinnerComponent::class,
+        ProgressComponent::class,
+        SkeletonComponent::class,
+        TooltipComponent::class,
+        TabsComponent::class,
+        AccordionComponent::class,
+        BreadcrumbComponent::class,
+        PaginationComponent::class,
+        TableComponent::class,
+        ToasterComponent::class,
+    ];
+
+    public function boot(): void
+    {
+        $this->registerViewNamespace('ui', $this->path('Views'));
+
+        $registry = $this->container->make(ComponentRegistry::class);
+        foreach (self::COMPONENTS as $component) {
+            // A registerAs() override registered by an earlier-booted module
+            // wins — never clobber it back to the package default.
+            if (!$registry->has($component::componentName())) {
+                $registry->register($component);
+            }
+        }
+
+        // Backs the `toaster` component's link to NotificationManager's
+        // `database` channel — see ToastNotificationSource. A plain Twig
+        // function (Engine::getTwig() is public precisely for this: a
+        // package registering its own Twig function/tag without needing a
+        // core change) rather than another component, since it returns
+        // data for the template to loop over, not markup to render.
+        $this->getView()->getTwig()->addFunction(new TwigFunction(
+            'toast_notifications',
+            fn (): array => $this->container->make(ToastNotificationSource::class)->pull(),
+        ));
+
+        // `{% component 'name' with {...} %}...{% endcomponent %}` — see
+        // Twig\ComponentTokenParser's docblock for what it saves you from
+        // writing by hand, and its scope (single default slot).
+        $this->getView()->getTwig()->addTokenParser(new ComponentTokenParser());
+    }
+}

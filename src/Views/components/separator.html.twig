@@ -1,0 +1,5 @@
+{% if orientation == 'vertical' %}
+<div class="inline-block h-full w-px self-stretch bg-slate-800 {{ class }}" role="separator" aria-orientation="vertical"></div>
+{% else %}
+<div class="h-px w-full bg-slate-800 {{ class }}" role="separator" aria-orientation="horizontal"></div>
+{% endif %}

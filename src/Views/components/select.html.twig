@@ -1,0 +1,12 @@
+<select
+    name="{{ name }}"
+    id="{{ id }}"
+    {% if disabled %}disabled{% endif %}
+    class="w-full rounded-lg border bg-slate-900 px-3 py-2 text-slate-100 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 {{ error ? 'border-red-500 focus:border-red-400' : 'border-slate-700 focus:border-orange-400' }} {{ class }}"
+>
+    {% if placeholder %}<option value="" {% if value == '' %}selected{% endif %} disabled hidden>{{ placeholder }}</option>{% endif %}
+    {% for optionValue, optionLabel in options %}
+        <option value="{{ optionValue }}" {% if optionValue == value %}selected{% endif %}>{{ optionLabel }}</option>
+    {% endfor %}
+    {{ slot|raw }}
+</select>

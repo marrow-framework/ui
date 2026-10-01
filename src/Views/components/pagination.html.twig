@@ -1,0 +1,23 @@
+<nav aria-label="Pagination" class="flex items-center justify-center gap-1 {{ class }}">
+    {% if prevUrl %}
+        <a href="{{ prevUrl }}" class="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-800">&larr;</a>
+    {% else %}
+        <span class="rounded-lg border border-slate-800 px-3 py-1.5 text-sm text-slate-600">&larr;</span>
+    {% endif %}
+
+    {% for item in pages %}
+        {% if item.ellipsis is defined %}
+            <span class="px-2 text-sm text-slate-600">&hellip;</span>
+        {% elseif item.page == currentPage %}
+            <span class="rounded-lg bg-orange-500 px-3 py-1.5 text-sm font-semibold text-slate-950" aria-current="page">{{ item.page }}</span>
+        {% else %}
+            <a href="{{ item.url }}" class="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-800">{{ item.page }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if nextUrl %}
+        <a href="{{ nextUrl }}" class="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-800">&rarr;</a>
+    {% else %}
+        <span class="rounded-lg border border-slate-800 px-3 py-1.5 text-sm text-slate-600">&rarr;</span>
+    {% endif %}
+</nav>
