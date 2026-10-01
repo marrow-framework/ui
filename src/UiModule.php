@@ -35,6 +35,7 @@ use Marrow\Ui\Components\ToasterComponent;
 use Marrow\Ui\Components\TooltipComponent;
 use Marrow\Ui\Notifications\ToastNotificationSource;
 use Marrow\Ui\Twig\ComponentTokenParser;
+use Marrow\Ui\Twig\HtmlComponentLoader;
 use Twig\TwigFunction;
 
 /**
@@ -112,5 +113,13 @@ class UiModule extends BaseModule
         // Twig\ComponentTokenParser's docblock for what it saves you from
         // writing by hand, and its scope (single default slot).
         $this->getView()->getTwig()->addTokenParser(new ComponentTokenParser());
+
+        // `<mui-button variant="primary">Save</mui-button>` — rewritten to the
+        // tag form above before Twig's lexer ever runs on it. See
+        // Twig\HtmlComponentTag's docblock for the attribute syntax and its
+        // accepted limitations (no awareness of Twig comments/verbatim
+        // blocks — don't use the `<mui-` prefix for anything else).
+        $twig = $this->getView()->getTwig();
+        $twig->setLoader(new HtmlComponentLoader($twig->getLoader()));
     }
 }
