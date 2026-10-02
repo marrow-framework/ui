@@ -36,6 +36,15 @@ use Marrow\Template\Component;
  * `method_field()` Twig function — the real `<form method="">` stays
  * GET/POST, a hidden `_method` field carries the real one, exactly like any
  * other Marrow form.
+ *
+ * Known gap: form-builder's `Field` base class has no `attrs`/`class`
+ * carrying mechanism, so an auto-rendered field can't get a per-field
+ * `autocomplete`/`inputmode`/custom class this way — those are lost for
+ * fields rendered through the auto-loop. A field that needs one (an OTP
+ * code input wanting `inputmode: numeric`, say) is better rendered by hand
+ * via the plain `field` component instead, using `form.field('name').errors`
+ * for `errorMessages` to keep validation wired to the same Form — see
+ * `marrow/warden`'s `two-factor-challenge.html.twig` for exactly this.
  */
 class FormComponent extends Component
 {
