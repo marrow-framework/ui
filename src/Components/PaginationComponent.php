@@ -22,6 +22,7 @@ class PaginationComponent extends Component
     /** How many page numbers to show on each side of the current page. */
     public int $siblings = 1;
     public string $class = '';
+    public array $attrs = [];
 
     public function render(): string
     {

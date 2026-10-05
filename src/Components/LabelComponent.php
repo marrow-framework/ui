@@ -12,6 +12,7 @@ class LabelComponent extends Component
     public ?string $for = null;
     public bool $required = false;
     public string $class = '';
+    public array $attrs = [];
     public string $slot = '';
 
     public function render(): string

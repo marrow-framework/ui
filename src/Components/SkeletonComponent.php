@@ -10,6 +10,7 @@ use Marrow\Template\Component;
 class SkeletonComponent extends Component
 {
     public string $class = '';
+    public array $attrs = [];
 
     public function render(): string
     {

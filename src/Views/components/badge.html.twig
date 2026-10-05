@@ -1,3 +1,4 @@
-<span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {{ variantClasses }} {{ class }}">
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
+<span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium {{ variantClasses }} {{ class }}"{{ attrs_macro.render(attrs) }}>
     {{ slot|raw }}
 </span>

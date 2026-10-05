@@ -39,6 +39,8 @@ class ModalComponent extends Component
     public string $trigger = '';
     public string $slot = '';
     public string $maxWidth = 'md'; // sm|md|lg|xl
+    public string $class = '';
+    public array $attrs = [];
 
     public function render(): string
     {

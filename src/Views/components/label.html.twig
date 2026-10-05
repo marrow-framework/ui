@@ -1,3 +1,4 @@
-<label {% if for %}for="{{ for }}"{% endif %} class="mb-1 block text-sm font-medium text-slate-300 {{ class }}">
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
+<label {% if for %}for="{{ for }}"{% endif %} class="mb-1 block text-sm font-medium text-slate-300 {{ class }}"{{ attrs_macro.render(attrs) }}>
     {{ slot|raw }}{% if required %} <span class="text-red-400">*</span>{% endif %}
 </label>

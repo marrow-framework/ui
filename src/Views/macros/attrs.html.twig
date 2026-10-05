@@ -1,0 +1,15 @@
+{#
+ # Shared helper for rendering a component's `attrs` prop (arbitrary HTML
+ # attribute passthrough — style, data-*, aria-*, or anything else with no
+ # dedicated prop) onto its root element.
+ #
+ # Usage:
+ #   {% import "@ui/macros/attrs.html.twig" as attrs_macro %}
+ #   <div class="...base classes... {{ class }}"{{ attrs_macro.render(attrs) }}>
+ #
+ # A `true` value renders a bare boolean attribute (`required: true` →
+ # `required`); `false`/`null` omits the attribute entirely; anything else
+ # renders `name="value"`. Each rendered attribute is preceded by a space,
+ # so this can be dropped right after the closing `"` of `class="..."`.
+ #}
+{% macro render(attrs) %}{% for name, value in attrs %}{% if value is same as(true) %} {{ name }}{% elseif value is not same as(false) and value is not same as(null) %} {{ name }}="{{ value }}"{% endif %}{% endfor %}{% endmacro %}

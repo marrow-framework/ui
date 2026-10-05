@@ -1,1 +1,2 @@
-<h3 class="text-sm font-semibold text-slate-50 {{ class }}">{{ slot|raw }}</h3>
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
+<h3 class="text-sm font-semibold text-slate-50 {{ class }}"{{ attrs_macro.render(attrs) }}>{{ slot|raw }}</h3>

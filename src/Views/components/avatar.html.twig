@@ -1,7 +1,8 @@
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
 {% if src %}
-<img src="{{ src }}" alt="{{ alt }}" class="inline-block shrink-0 rounded-full object-cover {{ sizeClasses }} {{ class }}">
+<img src="{{ src }}" alt="{{ alt }}" class="inline-block shrink-0 rounded-full object-cover {{ sizeClasses }} {{ class }}"{{ attrs_macro.render(attrs) }}>
 {% else %}
-<span class="inline-flex shrink-0 items-center justify-center rounded-full bg-slate-800 font-medium text-slate-300 {{ sizeClasses }} {{ class }}">
+<span class="inline-flex shrink-0 items-center justify-center rounded-full bg-slate-800 font-medium text-slate-300 {{ sizeClasses }} {{ class }}"{{ attrs_macro.render(attrs) }}>
     {{ initials }}
 </span>
 {% endif %}

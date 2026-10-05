@@ -26,6 +26,7 @@ class TabsComponent extends Component
     /** @var array<int, array{id: string, label: string, content: string}> */
     public array $tabs = [];
     public string $class = '';
+    public array $attrs = [];
 
     public function render(): string
     {

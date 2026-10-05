@@ -1,4 +1,5 @@
-<li class="flex items-center {{ class }}">
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
+<li class="flex items-center {{ class }}"{{ attrs_macro.render(attrs) }}>
     {% if href %}
         <a href="{{ href }}" class="hover:text-orange-300">{{ slot|raw }}</a>
     {% else %}

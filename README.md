@@ -148,6 +148,14 @@ templates — e.g. `Components/Card/CardHeaderComponent.php` renders `Views/comp
 This only affects where the PHP/Twig *files* live; the registered component *name* you actually call
 (`card-header`) is the same either way.
 
+Every component below accepts two props beyond the ones listed in its own row (omitted from the tables for
+brevity, since they're universal): `class`, a string **merged additively** with the component's own base
+Tailwind classes (never replacing them), and `attrs`, an array of arbitrary HTML attribute name/value pairs
+rendered onto the component's root element — the mechanism for `style`, `data-*`, `aria-*`, or anything else
+with no dedicated prop (see `InputComponent`'s docblock for the exact `attrs` value rules: `true` → bare
+boolean attribute, `false`/`null` → omitted). This holds unless a component's own docs say otherwise (`form`,
+for instance — see its own section below).
+
 | Component    | Props                                                                                                                 | Notes                                                                                                                                    |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------| ------------------------------------------------------------------------------------------------------------------------------------------|
 | `button`     | `variant` (primary/secondary/danger/ghost/outline), `size` (sm/md/lg), `type`, `href`, `disabled`, `loading`, `slot`  | Renders `<a>` instead of `<button>` when `href` is set.                                                                                  |

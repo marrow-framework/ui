@@ -11,6 +11,7 @@ class SeparatorComponent extends Component
 {
     public string $orientation = 'horizontal'; // horizontal|vertical
     public string $class = '';
+    public array $attrs = [];
 
     public function render(): string
     {

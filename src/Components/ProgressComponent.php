@@ -12,6 +12,7 @@ class ProgressComponent extends Component
     public float $value = 0;
     public float $max = 100;
     public string $class = '';
+    public array $attrs = [];
 
     public function render(): string
     {

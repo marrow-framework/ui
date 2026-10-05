@@ -17,6 +17,7 @@ class AvatarComponent extends Component
     public string $initials = '';
     public string $size = 'md'; // sm|md|lg
     public string $class = '';
+    public array $attrs = [];
 
     private const SIZES = [
         'sm' => 'h-8 w-8 text-xs',

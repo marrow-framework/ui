@@ -1,1 +1,2 @@
-<option value="{{ value }}" {% if selected %}selected{% endif %} {% if disabled %}disabled{% endif %}>{{ slot|raw }}</option>
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
+<option value="{{ value }}" {% if selected %}selected{% endif %} {% if disabled %}disabled{% endif %} class="{{ class|default('') }}"{{ attrs_macro.render(attrs|default({})) }}>{{ slot|raw }}</option>

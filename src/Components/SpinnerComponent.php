@@ -11,6 +11,7 @@ class SpinnerComponent extends Component
 {
     public string $size = 'md'; // sm|md|lg
     public string $class = '';
+    public array $attrs = [];
 
     private const SIZES = [
         'sm' => 'h-4 w-4',

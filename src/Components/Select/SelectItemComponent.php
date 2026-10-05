@@ -29,6 +29,8 @@ class SelectItemComponent extends Component
     public string $value = '';
     public bool $selected = false;
     public bool $disabled = false;
+    public string $class = '';
+    public array $attrs = [];
     public string $slot = '';
 
     public function render(): string

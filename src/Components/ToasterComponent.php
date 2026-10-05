@@ -25,6 +25,9 @@ use Marrow\Template\Component;
  */
 class ToasterComponent extends Component
 {
+    public string $class = '';
+    public array $attrs = [];
+
     public function render(): string
     {
         return '@ui/components/toaster';

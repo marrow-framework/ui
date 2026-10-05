@@ -1,4 +1,5 @@
-<svg class="animate-spin {{ sizeClasses }} {{ class }}" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="status" aria-label="Loading">
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
+<svg class="animate-spin {{ sizeClasses }} {{ class }}"{{ attrs_macro.render(attrs) }} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="status" aria-label="Loading">
     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
 </svg>

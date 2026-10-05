@@ -1,3 +1,4 @@
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
 {% set serverToasts = [] %}
 
 {% set flashStatus = session_flash('status') %}
@@ -12,7 +13,7 @@
 
 <div
     x-data
-    class="pointer-events-none fixed inset-x-0 bottom-4 z-[100] flex flex-col items-center gap-2 px-4 sm:inset-x-auto sm:right-4 sm:items-end"
+    class="pointer-events-none fixed inset-x-0 bottom-4 z-[100] flex flex-col items-center gap-2 px-4 sm:inset-x-auto sm:right-4 sm:items-end {{ class|default('') }}"{{ attrs_macro.render(attrs|default({})) }}
 >
     <template x-for="t in $store.toaster.toasts" :key="t.id">
         <div

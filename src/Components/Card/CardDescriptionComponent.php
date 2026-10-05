@@ -10,6 +10,7 @@ use Marrow\Template\Component;
 class CardDescriptionComponent extends Component
 {
     public string $class = '';
+    public array $attrs = [];
     public string $slot = '';
 
     public function render(): string
