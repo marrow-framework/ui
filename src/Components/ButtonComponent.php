@@ -23,6 +23,7 @@ class ButtonComponent extends Component
     public bool $disabled = false;
     public bool $loading = false;
     public string $class = '';
+    public array $attrs = [];
     public string $slot = '';
 
     private const VARIANTS = [

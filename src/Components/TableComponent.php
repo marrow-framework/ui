@@ -25,6 +25,7 @@ class TableComponent extends Component
     /** @var array<int, string[]> */
     public array $rows = [];
     public string $class = '';
+    public array $attrs = [];
 
     public function render(): string
     {

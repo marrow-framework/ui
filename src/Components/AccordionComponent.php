@@ -24,6 +24,7 @@ class AccordionComponent extends Component
     /** @var array<int, array{title: string, content: string}> */
     public array $items = [];
     public string $class = '';
+    public array $attrs = [];
 
     public function render(): string
     {

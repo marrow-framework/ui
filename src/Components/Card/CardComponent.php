@@ -36,6 +36,7 @@ class CardComponent extends Component
     public ?string $title = null;
     public string $footer = '';
     public string $class = '';
+    public array $attrs = [];
     public string $slot = '';
     public bool $composed = false;
 

@@ -26,6 +26,7 @@ use Marrow\Template\Component;
 class CardHeaderComponent extends Component
 {
     public string $class = '';
+    public array $attrs = [];
     public string $slot = '';
 
     public function render(): string

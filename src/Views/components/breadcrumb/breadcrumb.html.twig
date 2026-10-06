@@ -1,4 +1,5 @@
-<nav aria-label="Breadcrumb" class="{{ class }}">
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
+<nav aria-label="Breadcrumb" class="{{ class }}"{{ attrs_macro.render(attrs) }}>
     {% if items %}
     <ol class="flex flex-wrap items-center gap-2 text-sm text-slate-400">
         {% for item in items %}

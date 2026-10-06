@@ -34,6 +34,7 @@ class BreadcrumbComponent extends Component
     /** @var array<int, array{label: string, href?: string}> */
     public array $items = [];
     public string $class = '';
+    public array $attrs = [];
     public string $slot = '';
 
     public function render(): string

@@ -1,5 +1,6 @@
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
 {% if orientation == 'vertical' %}
-<div class="inline-block h-full w-px self-stretch bg-slate-800 {{ class }}" role="separator" aria-orientation="vertical"></div>
+<div class="inline-block h-full w-px self-stretch bg-slate-800 {{ class }}"{{ attrs_macro.render(attrs) }} role="separator" aria-orientation="vertical"></div>
 {% else %}
-<div class="h-px w-full bg-slate-800 {{ class }}" role="separator" aria-orientation="horizontal"></div>
+<div class="h-px w-full bg-slate-800 {{ class }}"{{ attrs_macro.render(attrs) }} role="separator" aria-orientation="horizontal"></div>
 {% endif %}

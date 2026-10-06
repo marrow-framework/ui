@@ -11,6 +11,7 @@ class BadgeComponent extends Component
 {
     public string $variant = 'default';
     public string $class = '';
+    public array $attrs = [];
     public string $slot = '';
 
     private const VARIANTS = [

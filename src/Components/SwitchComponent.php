@@ -19,6 +19,7 @@ class SwitchComponent extends Component
     public bool $disabled = false;
     public string $label = '';
     public string $class = '';
+    public array $attrs = [];
 
     /** See InputComponent's docblock — can't be a plain public `$name`/`$id`. */
     private string $fieldName = '';

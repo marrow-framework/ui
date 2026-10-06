@@ -25,6 +25,7 @@ class SelectComponent extends Component
     public bool $disabled = false;
     public bool $error = false;
     public string $class = '';
+    public array $attrs = [];
     public string $slot = '';
 
     /** See InputComponent's docblock — can't be a plain public `$name`/`$id`. */

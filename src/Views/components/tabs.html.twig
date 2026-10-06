@@ -1,4 +1,5 @@
-<div x-data="{ tab: '{{ defaultTab }}' }" class="{{ class }}">
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
+<div x-data="{ tab: '{{ defaultTab }}' }" class="{{ class }}"{{ attrs_macro.render(attrs) }}>
     <div class="flex gap-1 border-b border-slate-800" role="tablist">
         {% for t in tabs %}
         <button

@@ -1,1 +1,2 @@
-<p class="text-sm text-slate-400 {{ class }}">{{ slot|raw }}</p>
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
+<p class="text-sm text-slate-400 {{ class }}"{{ attrs_macro.render(attrs) }}>{{ slot|raw }}</p>

@@ -18,6 +18,7 @@ class AlertComponent extends Component
     public ?string $title = null;
     public bool $dismissible = false;
     public string $class = '';
+    public array $attrs = [];
     public string $slot = '';
 
     private const STYLES = [

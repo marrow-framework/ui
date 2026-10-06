@@ -23,6 +23,8 @@ class TooltipComponent extends Component
     public string $trigger = '';
     public string $slot = '';
     public string $side = 'top'; // top|bottom|left|right
+    public string $class = '';
+    public array $attrs = [];
 
     private const SIDES = [
         'top' => 'bottom-full left-1/2 mb-2 -translate-x-1/2',

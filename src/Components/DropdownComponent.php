@@ -35,6 +35,8 @@ class DropdownComponent extends Component
     public string $trigger = '';
     public string $slot = '';
     public string $align = 'right'; // left|right
+    public string $class = '';
+    public array $attrs = [];
 
     public function render(): string
     {

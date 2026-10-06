@@ -1,13 +1,14 @@
+{% import "@ui/macros/attrs.html.twig" as attrs_macro %}
 {% set base = 'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50' %}
 {% if href %}
-<a href="{{ href }}" class="{{ base }} {{ variantClasses }} {{ sizeClasses }} {{ class }}">
+<a href="{{ href }}" class="{{ base }} {{ variantClasses }} {{ sizeClasses }} {{ class }}"{{ attrs_macro.render(attrs) }}>
     {{ slot|raw }}
 </a>
 {% else %}
 <button
     type="{{ type }}"
     {% if disabled or loading %}disabled{% endif %}
-    class="{{ base }} {{ variantClasses }} {{ sizeClasses }} {{ class }}"
+    class="{{ base }} {{ variantClasses }} {{ sizeClasses }} {{ class }}"{{ attrs_macro.render(attrs) }}
 >
     {% if loading %}{{ component('spinner', {size: 'sm'}) }}{% endif %}
     {{ slot|raw }}

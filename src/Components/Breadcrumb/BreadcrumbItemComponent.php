@@ -19,6 +19,7 @@ class BreadcrumbItemComponent extends Component
 {
     public ?string $href = null;
     public string $class = '';
+    public array $attrs = [];
     public string $slot = '';
 
     public function render(): string
