@@ -7,6 +7,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-10-06
+
+### Fixed
+
+- **Every component rendered with none of its own styling** — `php forge ui:install` wired Alpine.js into
+  `resources/js/app.js`/`resources/css/app.css` but never told Tailwind v4 to scan this package's own templates
+  for utility classes. Tailwind v4's automatic content detection skips anything `.gitignore` excludes, which
+  includes `/vendor/` in every Marrow app — so a utility class that appears *only* inside `marrow/ui`'s own
+  Twig templates (a button's `bg-orange-500`, a checkbox's `h-4 w-4 rounded ...`, an input's `rounded-lg border
+  bg-slate-900 ...`) was silently never generated, even though the component itself rendered fine. `ui:install`
+  now also appends `@source "../../vendor/marrow/ui/src/Views";` to `resources/css/app.css`. An app that already
+  ran `ui:install` before this fix needs that one line added by hand (or re-run `ui:install` — already-wired
+  sections are skipped, so it's safe to re-run).
+
 ## [1.1.0] - 2026-10-05
 
 ### Added
