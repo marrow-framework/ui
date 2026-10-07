@@ -9,7 +9,7 @@ Sonner-style toaster, and more) built entirely on the framework's own `Marrow\Te
 
 ```bash
 composer require marrow/ui
-php forge ui:install   # wires Alpine.js into resources/js/app.js + resources/css/app.css
+php forge ui:install   # wires Alpine.js + a Tailwind @source into resources/js/app.js and resources/css/app.css
 npm install alpinejs
 npm run dev
 ```
@@ -17,6 +17,14 @@ npm run dev
 That's it — components register themselves the moment the package is required (`UiModule::boot()`), no
 publishing, no config. Unlike `marrow/warden`, there is nothing to "own": this is a real shared dependency,
 upgraded with `composer update` like any other.
+
+**The `@source` line `ui:install` adds is not optional** — Tailwind v4's automatic content detection skips
+anything `.gitignore` excludes, which includes `/vendor/` in every Marrow app. Without
+`@source "../../vendor/marrow/ui/src/Views";` in `resources/css/app.css`, a component still renders, but every
+utility class that appears *only* inside this package's own templates (a button's `bg-orange-500`, a
+checkbox's `h-4 w-4 rounded ...`) is never generated — easy to mistake for "the design is just plain" rather
+than "the CSS for this never got built". If you ran `ui:install` before this note existed and components look
+unstyled, re-run it (it's safe — already-wired sections are skipped) or add the `@source` line by hand.
 
 ## Usage
 
