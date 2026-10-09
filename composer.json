@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": ">=8.2",
-        "marrow/framework": "^2.2"
+        "marrow/framework": "^3.0"
     },
     "suggest": {
         "marrow/form-builder": "Enables the `form` component's automatic field rendering for a marrow/form-builder Form instance"
